@@ -21,3 +21,26 @@ body
     <h1>    : 기본 텍스트
     <input> : 입력
     <button>: 버튼
+    <script>: js의 실행
+
+현재 js에서는 다음과 같은 코드줄이 있다.
+const button = document.querySelector("button");
+>> html 문서(document)에서 button 태그를 찾고, 이를 button에 저장.
+
+
+html의 태그는 기본적으로 정의된 것을 사용, 기본 태그에 class나 id를 지정하는 형식을 쓴다.
+기본 태그는 다음과 같다.
+
+태그        의미
+h1 ~ h6     제목
+p           문단
+button      버튼
+input       입력
+ul / li     목록
+
+div / span  큰 의미 X(CSS,JS를 위한 사용)
+
+canvas	    그림/게임
+img	        이미지
+video	    영상
+audio	    소리
