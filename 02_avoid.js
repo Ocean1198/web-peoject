@@ -14,6 +14,8 @@ const player = {
 const obstacles = [];
 // 장애물 생성 타이머
 let spawnTimer = 0;
+// 장애물 생성 주기
+let spawnCycle = 60;
 
 // 점수
 let score = 0;
@@ -29,10 +31,10 @@ const keys = {
 
 // 키 이벤트 리스너
 window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
+    if (e.key === "ArrowLeft" || e.key === "A" || e.key === "a") {
         keys.left = true;
     }
-    if (e.key === "ArrowRight") {
+    if (e.key === "ArrowRight" || e.key === "D" || e.key === "d") {
         keys.right = true;
     }
     if (e.key === "r" || e.key === "R") {
@@ -85,6 +87,7 @@ function resetGame() {
     obstacles.length = 0;
 
     spawnTimer = 0;
+    spawnCycle = 60;
     score = 0;
 
     isGameOver = false;
@@ -112,9 +115,13 @@ function update() {
         player.x = canvas.width - player.width;
     }
 
+    // 장애물 생성 주기 관리
+    spawnCycle = 60 - (score*0.02)
+    if (spawnCycle < 15) spawnCycle = 15;
+
     // 타이머 기반 장애물 생성
     spawnTimer++;
-    if (spawnTimer > 60) {
+    if (spawnTimer > spawnCycle) {
         spawnObstacle();
         spawnTimer = 0;
     }
@@ -161,7 +168,7 @@ function draw() {
     // 점수 표시
     ctx.fillStyle = "black";
     ctx.font = "20px Arial";
-    ctx.fillText("Score: " + Math.floor(score/10)*10, 10, 30);
+    ctx.fillText("Score: " + score, 10, 30);
 
     // 게임 오버 메시지
     if (isGameOver) {
