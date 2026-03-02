@@ -15,6 +15,9 @@ const obstacles = [];
 // 장애물 생성 타이머
 let spawnTimer = 0;
 
+// 점수
+let score = 0;
+
 // 게임 오버 감지
 let isGameOver = false;
 
@@ -82,12 +85,16 @@ function resetGame() {
     obstacles.length = 0;
 
     spawnTimer = 0;
+    score = 0;
 
     isGameOver = false;
 }
 
 function update() {
     if (isGameOver) return;
+
+    // 점수 증가
+    if (!isGameOver) score++;
 
     // 플레이어 이동
     if (keys.left) {
@@ -151,10 +158,19 @@ function draw() {
         ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
     }
 
+    // 점수 표시
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.fillText("Score: " + Math.floor(score/10)*10, 10, 30);
+
+    // 게임 오버 메시지
     if (isGameOver) {
         ctx.fillStyle = "black";
         ctx.font = "40px Arial";
         ctx.fillText("GAME OVER", 80, 300);
+        
+        ctx.font = "20px Arial";
+        ctx.fillText("Press R to Restart", 110, 350);
     }
 }
 
