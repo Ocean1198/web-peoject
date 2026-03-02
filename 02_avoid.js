@@ -43,6 +43,13 @@ function update() {
     if (keys.right) {
         player.x += player.speed;
     }
+
+    if (player.x < 0) {
+        player.x = 0;
+    }
+    if (player.x + player.width > canvas.width) {
+        player.x = canvas.width - player.width;
+    }
 }
 
 function draw() {
