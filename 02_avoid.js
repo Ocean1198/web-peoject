@@ -15,7 +15,8 @@ const obstacles = [];
 // 장애물 생성 타이머
 let spawnTimer = 0;
 // 장애물 생성 주기
-let spawnCycle = 60;
+let basicSpawnCycle = 60;
+let spawnCycle = basicSpawnCycle;
 
 // 점수
 let score = 0;
@@ -33,6 +34,28 @@ const keys = {
 
 // 최고 점수
 let highScore = Number(localStorage.getItem("highscore")) || 0;
+
+// 개발자 모드
+const devMode = document.getElementById("devMode");
+const devPanel = document.getElementById("devPanel");
+
+devMode.addEventListener("change", () => {
+    devPanel.style.display = devMode.checked ? "block" : "none";
+});
+
+// 개발자 모드에 의한 변수 조절
+const speedControl = document.getElementById("speedControl");
+const spawnControl = document.getElementById("spawnControl");
+
+speedControl.addEventListener("input", () => {
+    player.speed = Number(speedControl.value);
+    document.getElementById("speedValue").textContent = player.speed;
+});
+
+spawnControl.addEventListener("input", () => {
+    basicSpawnCycle = Number(spawnControl.value);
+    document.getElementById("spawnCycleValue").textContent = Math.floor(spawnCycle);
+});
 
 // 키 이벤트 리스너
 window.addEventListener("keydown", (e) => {
@@ -95,7 +118,7 @@ function resetGame() {
     obstacles.length = 0;
 
     spawnTimer = 0;
-    spawnCycle = 60;
+    spawnCycle = basicSpawnCycle;
     score = 0;
 
     isGameOver = false;
@@ -124,7 +147,7 @@ function update() {
     }
 
     // 장애물 생성 주기 관리
-    spawnCycle = 60 - (score*0.02)
+    spawnCycle = basicSpawnCycle - (score*0.02)
     if (spawnCycle < 15) spawnCycle = 15;
 
     // 타이머 기반 장애물 생성
