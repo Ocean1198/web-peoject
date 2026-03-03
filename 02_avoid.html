@@ -8,25 +8,30 @@
 <body>
 
   <h1>피하기 게임</h1>
-  <canvas id="gameCanvas" width="400" height="600"></canvas>
 
-  
+  <div id="gameContainer">
+    <canvas id="gameCanvas" width="400" height="600"></canvas>    
 
-  <label>
-    <input type="checkbox" id="devMode">
-    개발자 모드
-  </label>
+    <label>
+      <input type="checkbox" id="devMode">
+      개발자 모드
+    </label>
 
-  <div id="devPanel">
-    <h3>Developer Panel</h3>
+    <div id="devPanel">
+      <h3>Developer Panel</h3>
 
-    <label>플레이어 속도</label>
-    <input type="range" id="speedControl" min="1" max="10" value="5">
-    <span id="speedValue">5</span>
+      <label>플레이어 속도</label>
+      <input type="range" id="speedControl" min="1" max="10" value="5">
+      <span id="speedValue">5</span>
 
-    <label>장애물 생성 주기</label>
-    <input type="range" id="spawnControl" min="10" max="100" value="50">
-    <span id="spawnCycleValue">50</span>
+      <label>장애물 속도</label>
+      <input type="range" id="obsSpeedControl" min="1" max="10" value="5">
+      <span id="obsSpeedValue">3</span>
+
+      <label>장애물 생성 주기</label>
+      <input type="range" id="spawnControl" min="10" max="100" value="50">
+      <span id="spawnCycleValue">50</span>
+    </div>
   </div>
 
   <script src="02_avoid.js" defer></script>

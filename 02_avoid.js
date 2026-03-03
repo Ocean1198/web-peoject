@@ -12,6 +12,8 @@ const player = {
 
 // 장애물 배열
 const obstacles = [];
+// 장애물 속도
+let obsSpeed = 3;
 // 장애물 생성 타이머
 let spawnTimer = 0;
 // 장애물 생성 주기
@@ -45,13 +47,17 @@ devMode.addEventListener("change", () => {
 
 // 개발자 모드에 의한 변수 조절
 const speedControl = document.getElementById("speedControl");
+const obsSpeedControl = document.getElementById("obsSpeedControl");
 const spawnControl = document.getElementById("spawnControl");
 
 speedControl.addEventListener("input", () => {
     player.speed = Number(speedControl.value);
     document.getElementById("speedValue").textContent = player.speed;
 });
-
+obsSpeedControl.addEventListener("input", () => {
+    obsSpeed = Number(obsSpeedControl.value);
+    document.getElementById("obsSpeedValue").textContent = obsSpeed;
+});
 spawnControl.addEventListener("input", () => {
     basicSpawnCycle = Number(spawnControl.value);
     document.getElementById("spawnCycleValue").textContent = Math.floor(spawnCycle);
@@ -93,7 +99,7 @@ function spawnObstacle() {
         y: 0,
         width: width,
         height: 40,
-        speed: 3
+        speed: obsSpeed
     };
 
     // 장애물 배열에 장애물 추가
