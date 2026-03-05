@@ -6,52 +6,53 @@ def make_ans(br, bc, r = 0, c = 0, board = None, seed = 42,
 
     # n: size of sudoku(n*n size), max number(1~n)
     n = br * bc
-    if board is None : 
-        random.seed(seed)
-        board = [[0 for _ in range(n)] for _ in range(n)]
-        row = [set() for _ in range(n)]
-        col = [set() for _ in range(n)]
-        block = [set() for _ in range(n)]
+    random.seed(seed)
 
-    if c == n : 
-        return board
-    
-    block_idx = (r // br) * (n // bc) + (c // bc)
+    board = [[0 for _ in range(n)] for _ in range(n)]
+    row = [set() for _ in range(n)]
+    col = [set() for _ in range(n)]
+    block = [set() for _ in range(n)]
 
-    available = list(
-        set(range(1, n+1))
-        - row[r]
-        - col[c]
-        - block[block_idx]
-    )
-
-    if not available : 
-        return False
-    
-    random.shuffle(available)
-    
-    for num in available : 
-        board[r][c] = num
-        row[r].add(num)
-        col[c].add(num)
-        block[block_idx].add(num)
-
-        if r == n-1 : 
-            result = make_ans(br, bc, 0, c+1, board, seed,
-                          row, col, block)
-        else : 
-            result = make_ans(br, bc, r+1, c, board, seed,
-                          row, col, block)
-        if result : 
-            return result
+    def dfs(r, c) : 
+        if c == n : 
+            return True
         
-        board[r][c] = 0
-        row[r].remove(num)
-        col[c].remove(num)
-        block[block_idx].remove(num)
+        block_idx = (r // br) * br + (c // bc)
+
+        available = list(
+            set(range(1, n+1))
+            - row[r]
+            - col[c]
+            - block[block_idx]
+        )
+
+        if not available : 
+            return False
+    
+        random.shuffle(available)
+        
+        for num in available : 
+            board[r][c] = num
+            row[r].add(num)
+            col[c].add(num)
+            block[block_idx].add(num)
+
+            if r == n-1 : 
+                result = dfs(0, c+1)
+            else : 
+                result = dfs(r+1, c)
+            if result : 
+                return result
+            
+            board[r][c] = 0
+            row[r].remove(num)
+            col[c].remove(num)
+            block[block_idx].remove(num)
+
+    dfs(0, 0)
         
 
-    return False
+    return board
 
 if __name__ == "__main__" : 
 
