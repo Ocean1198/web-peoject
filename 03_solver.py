@@ -35,10 +35,10 @@ def solver(board, br, bc) :
         if sol >= 2 : 
             return 2
         if index == len(empty_cells) : 
-            # # test
+            # test
             # for i in board : 
             #     print(*i)
-            # sol += 1
+            sol += 1
             return sol
         
         r, c = empty_cells[index]
@@ -57,7 +57,7 @@ def solver(board, br, bc) :
             col[c].add(num)
             block[b].add(num)
             
-            # print(index, depth, board)
+            # print(index, board)
 
             dfs(index+1)
             
@@ -80,22 +80,26 @@ if __name__ == "__main__" :
     #          [0,0,0,0]]
 
     # # sudoku.com의 extreme 난이도 스도쿠. 정상적으로 풀이함(1).
-    board = [[0,7,0,0,2,0,8,0,0],
-            [6,0,0,0,3,0,0,7,0],
-            [0,4,8,0,0,0,0,0,0],
-            [7,0,0,2,0,0,0,0,9],
-            [5,0,0,0,1,0,0,6,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,4,0,0,0,8,0],
-            [2,0,0,5,0,0,0,1,0],
-            [4,0,5,9,0,0,6,0,0]]
+    # board = [[0,7,0,0,2,0,8,0,0],
+    #         [6,0,0,0,3,0,0,7,0],
+    #         [0,4,8,0,0,0,0,0,0],
+    #         [7,0,0,2,0,0,0,0,9],
+    #         [5,0,0,0,1,0,0,6,0],
+    #         [0,0,0,0,0,0,0,0,0],
+    #         [0,0,0,4,0,0,0,8,0],
+    #         [2,0,0,5,0,0,0,1,0],
+    #         [4,0,5,9,0,0,6,0,0]]
 
     # 해가 여러 개인 스도쿠. 정상적으로 풀이함(2).
     # board = [[0,0,0,0],
     #          [0,0,0,0],
     #          [0,0,0,0],
     #          [0,0,0,0]]
-    solution, backtrack = solver(board, 3, 3)
+
+    board = [[3, 4, 1, 2], [2, 1, 4, 3], [4, 3, 2, 1], [1, 2, 0, 4]]
+
+
+    solution, backtrack = solver(board, 2, 2)
 
     print(solution, backtrack)
 

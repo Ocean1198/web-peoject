@@ -82,7 +82,7 @@ def solver(board, br, bc) :
             # # test
             # for i in board : 
             #     print(*i)
-            # sol += 1
+            sol += 1
             return sol
         
         r, c = empty_cells[index]
@@ -100,8 +100,6 @@ def solver(board, br, bc) :
             row[r].add(num)
             col[c].add(num)
             block[b].add(num)
-            
-            # print(index, depth, board)
 
             dfs(index+1)
             
@@ -133,19 +131,45 @@ def generate(br, bc, level, seed = 42) :
     극한: 25% 정도의 힌트, 100000회 이하의 탐색 횟수
     *sudoku.com의 extreme 난이도(최고 난이도) 문제 중 하나의 탐색 횟수는 198132회였다.
     """
+    random.seed(seed)
 
-    n = br * bc
     # board: n*n size list
-    board = make_ans(br, bc)
+    n = br * bc
+    board_ori = make_ans(br, bc)
+    board = [row[:] for row in board_ori]
 
-    # 이 아래는 조건에 맞을 때까지 반복
-    removed_idx = []
+    min_hint = round(n*n * [0.4, 0.35, 0.3, 0.25][level])
+    max_att = [1000, 10000, 50000, 100000][level]
+
+    random_idx = [(r,c) for r in range(n) for c in range(n)]
+    random.shuffle(random_idx)
+
+    hint = n * n
+
+    for rr, rc in random_idx : 
+        # 이 아래는 조건에 맞을 때까지 반복
+        ori = board[rr][rc]
+        board[rr][rc] = 0
+        hint -= 1
+        sol, att = solver(board, br, bc)
+        if sol != 1 : # 잘못된 문제
+            board[rr][rc] = ori
+            hint += 1
+        # 종료 조건
+        if att > max_att or hint - 1 < min_hint : 
+            break
     
+    return board_ori, board
 
 """
 편의상 level은 다음과 같이 지정
-easy(쉬움)      : 1
-normal(보통)    : 2
-hard(어려움)    : 3
-extreme(극한)   : 4
+easy(쉬움)      : 0
+normal(보통)    : 1
+hard(어려움)    : 2
+extreme(극한)   : 3
 """
+
+if __name__ == "__main__" : 
+    board_ori, board = generate(2, 3, 0)
+    for i in board_ori : 
+        print(*i)
