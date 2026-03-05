@@ -53,15 +53,9 @@ def make_ans(br, bc, r = 0, c = 0, board = None, seed = 42,
 
     return False
 
-# 문제 제작 코드. 정답에서 숫자를 하나씩 지우고 해결 알고리즘을 사용한다.
-def make_problem() : 
-    pass
+if __name__ == "__main__" : 
 
-# 문제 해결 코드. 문제 제작 과정에서 사용된다.
-def solve(br, bc) : 
-    pass
-
-# test code: make 4*4 sudoku
-board = make_ans(2, 2)
-for i in board : 
-    print(*i)
+    # test code: make 4*4 sudoku
+    board = make_ans(2, 2)
+    for i in board : 
+        print(*i)
